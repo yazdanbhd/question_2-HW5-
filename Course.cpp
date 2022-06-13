@@ -515,6 +515,207 @@ public:
 
 };
 
+class Universe {
+
+private:
+
+    int budget;
+    vector<Professor> professors;
+    vector <Studnet> students;
+
+
+
+
+public :
+    Universe(
+            int budget,
+            vector<Professor> professors,
+            vector <Studnet> students
+    ) {
+        this->budget = budget;
+        this->professors = professors;
+        this->students = students;
+    }
+
+    // Copy Constructer
+    Universe(const Universe& universe) {
+        this->budget = universe.budget;
+        this->professors = universe.professors;
+        this->students = universe.students;
+    }
+
+    double averageMarkOfCourse(string courseName) {
+
+        double avg = 0;
+        int count = 0;
+        for (int i = 0; i < students.size(); i++) {
+            if (students[i].hasCourse(courseName)) {
+                avg += students[i].getCourseAverage(courseName);
+                count = count + 1;
+            }
+        }
+
+        avg /= count;
+        cout << "Universe Average For Course => " << courseName << " => " << avg << endl;
+
+
+        return avg;
+
+    }
+
+    double averageGpaOfField(string filedOFStudy) {
+
+        int avg = 0;
+        int count = 0;
+        for (int i = 0; i < students.size(); i++) {
+            string temp = students[i].getFiledOFStudy();
+            if (temp == filedOFStudy) {
+                avg += students[i].getAvg();
+                count = count + 1;
+            }
+        }
+
+
+
+
+        if (count == 0) {
+            cout << "Enter Course Name Correctly => " << endl;
+            return 0;
+        }
+        else {
+            cout << "Universe Average GPA For filed OF Study => " << filedOFStudy << " ==> " << (avg /= count) << endl;
+            return avg /= count;
+        }
+
+
+    }
+
+    double averageGpa() {
+
+        int avg = 0;
+        int count = 0;
+        for (int i = 0; i < students.size(); i++) {
+            avg += students[i].getAvg();
+            count = count + 1;
+        }
+
+
+
+
+        if (count == 0) {
+            return 0;
+        }
+        else {
+            return avg /= count;
+        }
+
+
+    }
+
+    double getStudentBudget() {
+
+        double budget = 0;
+
+        for (Studnet studnet : students) {
+            budget += studnet.calculateSalary();
+        }
+
+        return budget;
+    }
+
+    double getProfessorBudget() {
+
+        double budget = 0;
+
+        for (Professor professor: professors) {
+            budget += professor.calculateSalary();
+        }
+
+        return budget;
+    }
+
+    bool isEnoughBudget() {
+        int finalBudget = getStudentBudget() + getProfessorBudget();
+
+        cout << "Universe Budge Is Enough ? =>" << (finalBudget < budget) << endl;
+        return finalBudget < budget;
+    }
+
+
+    vector<Studnet> saveToFile(vector<string> fillOfStudys) {
+
+
+        vector<Studnet> bestStudnets;
+
+        for (string fillOfStudy : fillOfStudys) {
+            double  max = 0 ;
+            vector<Studnet> pointed;
+            for (Studnet studnet : students) {
+                if (studnet.getFiledOFStudy() == fillOfStudy) {
+
+                    if (studnet.getAvg() > max) {
+                        max = studnet.getAvg();
+                        pointed.clear();
+                        pointed.push_back(studnet);
+                    }
+                }
+            }
+            bestStudnets.push_back(pointed[0]);
+        }
+
+
+        string filename("best Studnets.txt");
+        fstream file_out;
+        file_out.open(filename, std::ios_base::out);
+
+
+
+
+
+        for (Studnet studnet  :bestStudnets) {
+
+            if (file_out.is_open()) {
+                cout << "Writing The File ...." << filename << '\n';
+                file_out <<
+                         studnet.getId() << " " <<
+                         studnet.getFirstName() << " " <<
+                         studnet.getLastName() << " " <<
+                         studnet.getFiledOFStudy() << " " <<
+                         studnet.getAvg() << " " << endl;
+            }
+        }
+
+        file_out.close();
+
+
+        return bestStudnets;
+    }
+
+
+    friend ostream& operator<<(ostream& output, const Universe& universe) {
+
+        vector<Studnet> studnets = universe.students;
+        vector<Professor> professors = universe.professors;
+
+
+        for (Studnet std : studnets) {
+            cout << "Studnet Name => " << std.getFirstName() << endl;
+        }
+
+        for (Professor pf: professors) {
+            cout << "Professor Name => " << pf.getFirstName() << endl;
+        }
+
+
+        return output;
+    }
+
+    friend istream& operator>>(istream& input, Universe& universe) {
+        return input;
+    }
+
+};
+
 
 
 
