@@ -258,7 +258,262 @@ public:
 
 };
 
+class Studnet : public Person
+{
 
+
+private:
+    vector<Course> courses ;
+    int courseCount;
+    string filedOFStudy;
+    int numOFCourses;
+
+
+
+public:
+
+
+    Studnet(
+            vector<Course> courses,
+            string filedOFStudy,
+            string firstName,
+            string lastName,
+            string id,
+            int year ,
+            double workHour
+    ) : Person (firstName,lastName,id,workHour,year)
+    {
+        this->courses = courses;
+        this->filedOFStudy = filedOFStudy;
+        this->numOFCourses = numOFCourses;
+    }
+
+    double gpa()
+    {
+
+        double avg = 0;
+        for (int i = 0; i < courses.size(); i++)
+        {
+            avg += courses[i].getAvg();
+        }
+        avg /= courses.size();
+        return avg;
+    }
+
+
+    double calculateSalary()
+    {
+        int salary = 0;
+        if (gpa() > 17.0)
+        {
+            double mainIcnom  = static_cast<int>(getWorkHour()) * 20000;
+            int percent = mainIcnom * 0.1;
+            salary = mainIcnom + percent;
+        }
+        else
+        {
+            salary = static_cast<int>(getWorkHour()) * 20000;
+        }
+        return salary;
+
+        Person::calculateSalary();
+    }
+
+
+    string getFiledOFStudy()
+    {
+        return filedOFStudy;
+    }
+
+    int getCoursesCount()
+    {
+        return courses.size();
+    }
+
+    double getAvg()
+    {
+        double avg = 0;
+        for (Course course : courses)
+        {
+            avg += course.getAvg();
+        }
+        avg /= courses.size();
+        if (avg < 0) { return 0; }
+        else { return avg; }
+    }
+
+
+    double getCourseAverage(string couresName)
+    {
+
+        int avg = 0;
+        int count = 0 ;
+        for (int i = 0; i < courses.size(); i++)
+        {
+            if (courses[i].getName() == couresName)
+            {
+                avg += courses[i].getAvg();
+                count = count + 1;
+            }
+        }
+
+
+
+        if (count == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return avg /= count;
+        }
+
+    }
+
+    bool hasCourse(string couresName)
+    {
+        for (Course course : courses)
+        {
+            if (course.getName() == couresName)
+            {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+
+    friend ostream& operator<<(ostream& output, const Studnet& studnet)
+    {
+        output << "Salam";
+        return output;
+    }
+
+    friend istream& operator>>(istream& input, Studnet& studnet)
+    {
+
+        return input;
+    }
+
+};
+
+
+class Professor : public Person {
+
+private :
+
+    string title;
+
+public:
+    Professor(
+            string title ,
+            string firstName,
+            string lastName,
+            string id,
+            int year ,
+            double workHour) : Person(firstName, lastName, id,year , workHour)
+    {
+        this->title = title;
+    }
+
+
+    bool validate()
+    {
+        string id = getId();
+        if (id.length() == 8 )
+        {
+            int testOne = stoi(id.substr(0, 2));
+            if (testOne <= 84 && testOne >= 0)
+            {
+                bool testTwo = is_number(id.substr(3, 5));
+                if (testTwo == false && id.substr(3,4) == "#")
+                {
+                    int testThree;
+
+                    for (int i = 5; i < id.length(); i++)
+                    {
+                        int temp = stoi(id.substr(i, i + 1));
+                        if (temp < 4 || temp > 6) {}
+                        else
+                        {
+                            cout << "Invalid ID";
+                            return false;
+                            break;
+                        }
+                    }
+
+                }
+                else { cout << "Invalid ID" << endl;  return false; };
+            }
+            else
+            {
+                cout << "Invalid ID" << endl; return false;
+            }
+        }
+        else
+        {
+            cout << "Invalid ID" << endl;
+
+            return false;
+        }
+
+        Person::validate();
+
+    }
+
+
+
+    double calculateSalary()
+    {
+
+        int hourPerTier{};
+
+        if (title == "Instructor")
+        {
+            hourPerTier = 10000;
+        }
+
+
+        if (title == "Assistant Professor")
+        {
+            hourPerTier = 20000;
+        }
+
+
+        if (title == "Associate Professor")
+        {
+            hourPerTier = 30000;
+        }
+
+        if (title == "Professor")
+        {
+            hourPerTier = 40000;
+        }
+
+        double salary = static_cast<int>(getWorkHour()) * (50000+hourPerTier);
+
+
+
+        return salary;
+
+        Person::calculateSalary();
+    }
+
+
+
+    friend ostream& operator<<(ostream& output, const Professor& professor) {
+        output << "Salam";
+        return output;
+    }
+
+    friend istream& operator>>(istream& input, Professor& professor) {
+
+        return input;
+    }
+
+
+};
 
 
 
