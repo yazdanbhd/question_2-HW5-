@@ -1,0 +1,3 @@
+C:/Users/yzdan/Desktop/Course/cmake-build-debug/CMakeFiles/Course.dir
+C:/Users/yzdan/Desktop/Course/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/yzdan/Desktop/Course/cmake-build-debug/CMakeFiles/rebuild_cache.dir
