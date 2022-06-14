@@ -4,12 +4,12 @@
 int main()
 {
     Course course_1("Farsi", 3, vector<double> {12, 12, 12});
-    Course course_2("math", 3, vector<double> {20, 20, 20});
-    Course course_3("physics", 3, vector<double> {12, 10, 5});
+    Course course_2("Rizai", 3, vector<double> {20, 20, 20});
+    Course course_3("Olom", 3, vector<double> {12, 10, 5});
     Course course_4("Dyni", 3, vector<double> {10, 14, 20});
-    Course course_5("Biology", 3, vector<double> {14, 14, 14});
-    Course course_6("logic design", 3, vector<double> {14, 14, 14});
-    Course course_7("Cpp", 3, vector<double> {14, 14, 14});
+    Course course_5("Zist", 3, vector<double> {14, 14, 14});
+    Course course_6("Phyisc", 3, vector<double> {14, 14, 14});
+    Course course_7("C++", 3, vector<double> {14, 14, 14});
 
     vector<Course> student_1_COURSES = { course_1 ,course_2 ,course_3 ,course_4 };
     vector<Course> student_2_COURSES = { course_5 ,course_4,course_3 ,course_2 };
