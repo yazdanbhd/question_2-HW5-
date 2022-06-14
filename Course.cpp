@@ -6,6 +6,7 @@
 
 using namespace std;
 
+
 template <class T,size_t n>
 size_t getArraySize(T(&)[n])
 {
@@ -405,6 +406,7 @@ private :
 
     string title;
 
+
 public:
     Professor(
             string title ,
@@ -522,8 +524,6 @@ private:
     int budget;
     vector<Professor> professors;
     vector <Studnet> students;
-
-
 
 
 public :
